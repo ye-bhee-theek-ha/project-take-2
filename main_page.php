@@ -1,3 +1,13 @@
+<?php
+    require "backend_boilerplate.php";
+    session_start();
+
+    // getting all images
+    $all_images = "select * from images ORDER BY total_likes DESC LIMIT 20;";
+    $all_images_result = mysqli_query($conn,$all_images);
+    $row = mysqli_fetch_assoc($all_images_result);
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,14 +24,47 @@
     <div id = "page1_body">
         <nav class="navbar, navbar-expand-sm, fixed-top">
             <div id = "nav_bar" class = "container-fluid" style="background-color: rgba(67, 59, 56, 1);">
-                    <div >
-                        <img class = "img-fluid h-100 d-none d-md-flex" id= "logo" src="computer-screen.png" alt="logo">
+                    <div>
+                        <img class = "img-fluid h-100 d-none d-md-flex" id= "logo" src="img_assets/computer-screen.png" alt="logo">
                     </div>
                         <h6 class = "nav_bar_text text-center col-md-2" > <a class = "nav_bar_text" href="#">Snap Society</a> </h6>
                     <div class = "col-md-9 d-flex " style="display: flex">
                         <ul class = "nav_buttons_list_ul">
                             <button class = "nav_buttons"><a class = "nav_buttons_text" href="#page2_body"> Explore </a></button>
-                            <button class = "nav_buttons"><a class = "nav_buttons_text" href="login.html"> Login </a></button>
+
+                            <!-- do NOT display if user already logged in -->
+                            <button class = "nav_buttons
+                            <?php 
+                            if(isset($_SESSION["user_id"]))
+                                echo  " d-none";
+                            ?>
+                            ">
+                            <a class = "nav_buttons_text" href="login.php">
+                                Login
+                            </a></button>
+
+                            <!--  display pic if user already logged in -->
+                            <!-- defaut img -->
+                            <a href="profile_page.php">
+                                <span style="display: flex; color:antiquewhite; align-items: center; scale: 1.5; margin-inline: 5px;" class="material-symbols-outlined
+                                    <?php 
+                                    if(isset($_SESSION["user_id"]) && isset($_SESSION["profile_pic"]))
+                                        echo  " d-none";
+                                    ?>
+                                ">
+                                    account_circle
+                                </span>
+                            </a>
+
+                            <!-- user profile pic -->
+                            <a href="profile_page.php">
+                                <img id= "logo" src="<?php if (isset($_SESSION["profile_pic"])) {echo $_SESSION["profile_pic"];} ?>" alt="logo" style="overflow:hidden; width:34px; height:34px; border-radius: 50%;
+                                <?php 
+                                if(isset($_SESSION["user_id"]) && !isset($_SESSION["profile_pic"]))
+                                    echo  " display: none;";
+                                ?>
+                                ">
+                            </a>
             
                             <div class="nav_more_buttons_dropdown justify-content-end">
                                 <button class="nav_buttons_icon">
@@ -32,9 +75,9 @@
                                     </i>
                                 </button>
                                 <div class="nav_dropdown-content">
-                                    <button class = "nav_buttons"><a class = "nav_buttons_text" href="login.html"> signup </a></button>
-                                    <button class = "nav_buttons"><a class = "nav_buttons_text" href="gallery.html"> explore all </a></button>
-                                    <button class = "nav_buttons"><a class = "nav_buttons_text" href="#"> edit profile </a></button>
+                                    <button class = "nav_buttons"><a class = "nav_buttons_text" href="login.php"> Signup </a></button>
+                                    <button class = "nav_buttons"><a class = "nav_buttons_text" href="gallery.php"> Explore All </a></button>
+                                    <button class = "nav_buttons"><a class = "nav_buttons_text" href="profile_page.php"> Profile </a></button>
                                 </div>
                             </div>
             
@@ -73,7 +116,12 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <?php
+        print_r($_SESSION);
+        echo nl2br ("\n");
+        print_r($row);
+    ?>  
+    <script src="scripts/script.js"></script>
 </body>
 </html>
 

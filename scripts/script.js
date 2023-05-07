@@ -2,7 +2,7 @@ function display_all_images()
         {
             var all = document.getElementById("all_img");
     
-            for (var i = 1; i <= 6; i++)
+            for (var i = 1; i <= 35; i++)
             {
                 var img_box = document.createElement("div");
 
@@ -32,7 +32,7 @@ function display_all_images()
 
                 //- image
 
-                image.src = i + ".jpg";
+                image.src = "images/Wallpaper - " + i + ".jpg";
                 image.alt = "IMAGE" + i;
                 image.classList.add("image");
                 image.classList.add("img-fluid");

@@ -17,13 +17,13 @@
     <nav class="navbar, navbar-expand-sm, fixed-top">
         <div id = "nav_bar" class = "container-fluid" style="background-color: rgba(67, 59, 56, 1);">
                 <div >
-                    <img class = "img-fluid h-100 d-none d-md-flex" id= "logo" src="computer-screen.png" alt="logo">
+                    <img class = "img-fluid h-100 d-none d-md-flex" id= "logo" src="img_assets/computer-screen.png" alt="logo">
                 </div>
                     <h6 class = "nav_bar_text text-center col-md-2" > <a class = "nav_bar_text" href="#">Snap Society</a> </h6>
                 <div class = "col-md-9 d-flex " style="display: flex">
                     <ul class = "nav_buttons_list_ul" style="width: 210px;">
-                        <button class = "nav_buttons"><a class = "nav_buttons_text" href="main_page.html"> home </a></button>
-                        <button class = "nav_buttons"><a class = "nav_buttons_text" href="login.html"> Login </a></button>
+                        <button class = "nav_buttons"><a class = "nav_buttons_text" href="main_page.php"> home </a></button>
+                        <button class = "nav_buttons"><a class = "nav_buttons_text" href="login.php"> Login </a></button>
         
                         <div class="nav_more_buttons_dropdown justify-content-end">
                             <button class="nav_buttons_icon">
@@ -34,7 +34,7 @@
                                 </i>
                             </button>
                             <div class="nav_dropdown-content">
-                                <button class = "nav_buttons"><a class = "nav_buttons_text" href="login.html"> signup </a></button>
+                                <button class = "nav_buttons"><a class = "nav_buttons_text" href="login.php"> signup </a></button>
                                 <button class = "nav_buttons"><a class = "nav_buttons_text" href="#"> edit profile </a></button>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
 
 </body>
 </html>
