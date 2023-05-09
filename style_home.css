@@ -160,6 +160,8 @@ body {
 /* slowly drop down to be implemented */
 
 .nav_buttons_icon {
+  display: flex;
+  align-items: center;
   background: none;
   border: 0;
 }
@@ -379,7 +381,32 @@ body {
   margin-top: 5px;
 }
 
+.image_button_container {
+  display: flex;
+}
+
 .like_button {
   display: flex;
   color:antiquewhite;
+}
+
+.like_image {
+  height: 27px ;
+}
+
+.comment_button {
+  display: flex;
+  color:antiquewhite;
+}
+
+.total_likes {
+  display: contents;
+  font-size: larger;
+  color: antiquewhite;
+}
+
+.total_comments {
+  display: contents;
+  font-size: larger;
+  color: antiquewhite;
 }

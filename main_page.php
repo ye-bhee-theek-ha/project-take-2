@@ -1,11 +1,10 @@
 <?php
     require "backend_boilerplate.php";
-    session_start();
 
-    // getting all images
-    $all_images = "select * from images ORDER BY total_likes DESC LIMIT 20;";
-    $all_images_result = mysqli_query($conn,$all_images);
-    $row = mysqli_fetch_assoc($all_images_result);
+    session_start();
+    $current_user  = $_SESSION["user_id"];
+
+    require "get_liked_info.php";
 ?>
 
 <html lang="en">
@@ -88,12 +87,12 @@
         </nav>
     
         <div class="page1_content">
-            <form class="search" action="#">
+            <form class="search" action="" method="post">
                 <h1 class="above_content">4k wallpapers</h1>
                 <p class="above_content_discription">this is a testing website for databse project. this website will allow users to create an account, upoload pictures, view them and much more functionality </p>
                 <div class="input_bar">
                     <i class="material-icons" style="display: flex"> search </i>
-                    <input class="input" type="text" name="q" placeholder="" autocomplete="off" >
+                    <input class="input" type="text" name="search_bar" placeholder="" autocomplete="off" >
                 </div>
                 <div class="suggestions">
                     <ul class = "suggestions_list_ul">
@@ -117,11 +116,17 @@
     </div>
 
     <?php
-        print_r($_SESSION);
-        echo nl2br ("\n");
-        print_r($row);
+        // $gallery_images = false;
+        // $main_page_images = true;
+        // $profile_page_images = false; 
+        print_r(($_SESSION));
+
+        require_once "scripts/  .php";
+
+        // print_r($_SESSION);
+        // echo nl2br ("\n");
+        // print_r($row);
     ?>  
-    <script src="scripts/script.js"></script>
 </body>
 </html>
 

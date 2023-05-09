@@ -1,3 +1,22 @@
+<?php
+    require "backend_boilerplate.php";
+    session_start();
+
+    // getting all images
+    $data = array();
+
+
+    $all_images = "select * from images ORDER BY total_likes DESC LIMIT 20;";
+    $all_images_result = mysqli_query($conn,$all_images);
+
+    $num = mysqli_num_rows($all_images_result);
+    for ($i = 0; $i < $num; $i++)
+    {
+        $data[] = mysqli_fetch_assoc($all_images_result);
+    }
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +95,20 @@
         </div>
     </div>
 
-    <script src="scripts/script.js"></script>
+    <?php
+        // $gallery_images = false;
+        // $main_page_images = true;
+        // $profile_page_images = false; 
+        require_once "scripts/script.php";
+
+        // print_r($_SESSION);
+        // echo nl2br ("\n");
+        // print_r($row);
+    ?>  
+
+    <script src="scripts/script.php">
+
+    </script>
 
 </body>
 </html>

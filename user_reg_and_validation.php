@@ -1,6 +1,7 @@
 <?php
 require_once "backend_boilerplate.php";  //used for connection
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST')
 {
     print_r($_REQUEST);

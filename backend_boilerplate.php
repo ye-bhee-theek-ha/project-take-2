@@ -12,6 +12,13 @@
         die("Connection failed: " . $conn->connect_error);
     }
 
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+    
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    }
 
     // // creating database
     // $create_database = "Create DATABASE DBProject";

@@ -80,7 +80,7 @@
     </div>
 
     <?php
-    print_r($_SESSION);
+        print_r($_FILES);
     ?>    
 <script src="scripts/script.js"></script>
 </body>
