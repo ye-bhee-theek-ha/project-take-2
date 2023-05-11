@@ -3,8 +3,10 @@
 
     session_start();
     $current_user  = $_SESSION["user_id"];
+    $_SESSION["large_img"] = NULL;
+    $_SESSION["total_comments"] = NULL;
 
-    require "get_liked_info.php";
+    require "scripts/get_liked_info.php";
 ?>
 
 <html lang="en">
@@ -108,25 +110,121 @@
     </div>
     
     <div id="page2_body">
-        <div class="page2_content">
+        <div class="page2_content row">
             <h1 class="page2_heading"> Content </h1>
-            <div class="row , all_images, m-auto" id="all_img" >
+            
+
+            <div class="view_img position-sticky col-6" id="view_img" style="height : 90vh;">
+                <div class="image_container_view">
+                    <img class = "image_view img-fluid" id = "image_view" src="uploads/ok/t0apabs39vj91.jpg" alt="pic1">
+                    <div class="image_options">
+                        <div class="image_button_container">
+                            <button class="nav_buttons_icon dropdown-btn">
+                                <i class="like_button material-icons-more">
+                                    <span class="material-symbols-outlined">
+                                        comment
+                                    </span>
+                                </i>
+                                <div class="dropdown-menu">
+                                    <input type="text" name="text" placeholder="write your comment here...">script
+                                    <input type="submit" value="Upload_comment" name="submit">
+                                </div>
+                            </button>
+                        </div>
+                        <div>
+                            <p class="total_comments">
+                                0
+                            </p>
+                        </div>
+                        <div class="comments" id="comments">
+                            <?php include "scripts/comments.php"?>
+                            <script>
+                                // contains details of all comments for that image
+                                var array = <?php echo json_encode($array);?>;
+
+                                for (var i = 0; array[i]; i++)
+                                {   
+                                    var com =document.getElementById("comments");
+
+                                    var com_box =document.createElement("div");
+                                    var com_txt =document.createElement("span");
+
+                                    com_box.classList.add("com_box");
+                                    com_txt.classList.add("com_txt");
+
+                                    com_box.innerHTML =array[i]["user_id"] + "=>" + array[i]["comment"];
+
+                                    com.appendChild(com_box);
+                                    com_box.appendChild(com_com_txt);
+
+                                }
+                                console.log(array);
+                                console.log(i);
+
+                            </script>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="col-12 all_images " id="all_img" >
+            </div>
+
+           
         </div>
     </div>
+    <!-- <div class="col-lg-3 col-md-6 align-self-center">
+    <div class="image_container">
+        <img class = "image img-fluid" src="2.jpg" alt="pic1">
+        <div class="image_options">
+            <button class="nav_buttons_icon">
+                <i class="material-icons-more" style="display: flex; color:antiquewhite; margin-top: 5px;" > 
+                    <span class="material-symbols-outlined">
+                        favorite
+                    </span>
+                </i>
+            </button>
+        </div>
+    </div>
+</div> -->
 
     <?php
         // $gallery_images = false;
         // $main_page_images = true;
         // $profile_page_images = false; 
-        print_r(($_SESSION));
+        //print_r(($_SESSION));
 
-        require_once "scripts/  .php";
+        require_once "scripts/script.php";
 
         // print_r($_SESSION);
         // echo nl2br ("\n");
         // print_r($row);
-    ?>  
+    ?>
+
+    <script>
+    // Get the necessary elements
+    const dropdownBtn = document.querySelector('.dropdown-btn');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+   // const inputContainer = document.getElementById('input-container');
+    const inputFields = document.querySelectorAll('.dropdown-menu input');
+  
+    // Toggle dropdown menu
+    console.log("re");
+    dropdownBtn.addEventListener('click', function() {
+      dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+    });
+  
+    // Handle input selection
+    inputFields.forEach(function(input) {
+      input.addEventListener('click', function(event) {
+        const selectedInput = event.target;
+        const clonedInput = selectedInput.cloneNode(true);
+        inputContainer.innerHTML = '';
+        inputContainer.appendChild(clonedInput);
+        dropdownMenu.style.display = 'none'; // Hide the dropdown menu after selection
+      });
+    });
+    </script>
 </body>
 </html>
 

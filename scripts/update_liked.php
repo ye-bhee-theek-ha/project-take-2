@@ -21,37 +21,28 @@
     
     $total_likes = $data2["total_likes"];
 
-    debug_to_console($total_likes);
-
     if (isset($_SESSION["user_id"]))
     {
-        if ($data[1] == true)
+        if ($data[1] == true)   //liking
         {
             $sql_like = "INSERT INTO `likes` (`photo_id`, `user_id`)
                          VALUES ('{$data[0]}', '{$user_id}');";
 
             mysqli_query($conn, $sql_like);
             
-            $total_likes = $total_likes + 1;
-            $sql_increment_liked = "UPDATE `images` SET `total_likes` = '{$total_likes}'
+            $sql_increment_liked = "UPDATE `images` SET `total_likes` = '{$data[2]}'
             WHERE `images`.`photo_id` = '{$data[0]}';";
 
             mysqli_query($conn, $sql_increment_liked);
         }
-        else
+        else                    //inliking
         {
             $sql_unlike = "DELETE FROM `likes` 
                            WHERE  user_id = '{$user_id}' AND photo_id = '{$data[0]}'";
 
             mysqli_query($conn, $sql_unlike);
 
-            $sql_increment_liked = "UPDATE `images` SET `total_likes` = '{$total_likes}'
-                                    WHERE `images`.`photo_id` = '{$data[0]}';";
-
-            mysqli_query($conn, $sql_increment_liked);
-
-            $total_likes = $total_likes - 1;
-            $sql_increment_liked = "UPDATE `images` SET `total_likes` = '{$total_likes}'
+            $sql_increment_liked = "UPDATE `images` SET `total_likes` = '{$data[2]}'
                                     WHERE `images`.`photo_id` = '{$data[0]}';";
 
             mysqli_query($conn, $sql_increment_liked);

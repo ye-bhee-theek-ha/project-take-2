@@ -9,8 +9,6 @@
     $_SESSION["credit_card"] = NULL;
     
     include_once "user_reg_and_validation.php";
-    print_r($arr_register);
-
 ?>
 
 <html lang="en">

@@ -113,6 +113,10 @@ function login()
                 {
                     $_SESSION["profile_pic"] = NULL;
                 }
+                
+                //redirecting to main page
+                $url = "http://localhost/project%20take%203/main_page.php";
+                redirect($url);
             }
 
             
@@ -156,6 +160,12 @@ function register()
         $_SESSION["user_id"] = $arr_register[1];
         $_SESSION["email"] = $arr_register[2];
         $_SESSION["phone_num"] = $arr_register[3];
+
+        //redirecting to main page
+        $url = "http://localhost/project%20take%203/main_page.php";
+        redirect($url);
+
+
     }
 }   
 

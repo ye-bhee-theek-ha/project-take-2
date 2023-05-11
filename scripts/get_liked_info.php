@@ -9,8 +9,8 @@
     {
         // getting searched images
         $searched_text = $_POST["search_bar"];
-        $all_images = "select * from images
-                        WHERE (title LIKE '%{$searched_text}%'
+        $all_images = " select * from images
+                        WHERE (title LIKE '%{$searched_text}%')
                         ORDER BY total_likes DESC LIMIT 25;";
                         
     }
