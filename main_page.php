@@ -6,7 +6,9 @@
     $_SESSION["large_img"] = NULL;
     $_SESSION["total_comments"] = NULL;
 
-    require "scripts/get_liked_info.php";
+    require "scripts/get_liked_info.php"; //also get comment
+    require_once "scripts/script.php";
+    include_once "insert_comments.php";
 ?>
 
 <html lang="en">
@@ -114,54 +116,52 @@
             <h1 class="page2_heading"> Content </h1>
             
 
-            <div class="view_img position-sticky col-6" id="view_img" style="height : 90vh;">
-                <div class="image_container_view">
+            <div class="view_img position-sticky col-6" id="view_img" style="">
+                <div class="image_container_view" style="height: auto;">
+                    <div class="close_btn_div" style="margin-inline-start: auto;" >
+                        <button class="nav_buttons_icon" onclick="set_view_image_false()">
+                        <i class="like_button material-icons-more">
+                            <span class="material-symbols-outlined">
+                                close
+                            </span>
+                        </i>
+                        </button>
+                    </div>
                     <img class = "image_view img-fluid" id = "image_view" src="uploads/ok/t0apabs39vj91.jpg" alt="pic1">
-                    <div class="image_options">
+                    <div class="image_options2">
+                        <div class="info">
+                            <div class="title" id= "title">
+
+                            </div>
+                            <div class="description" id = "description">
+
+                            </div>
+
+                        </div>
                         <div class="image_button_container">
-                            <button class="nav_buttons_icon dropdown-btn">
+                            <button class="nav_buttons_icon dropdown-btn" type = "button">
                                 <i class="like_button material-icons-more">
                                     <span class="material-symbols-outlined">
                                         comment
                                     </span>
                                 </i>
                                 <div class="dropdown-menu">
-                                    <input type="text" name="text" placeholder="write your comment here...">script
+                                    <input type="text" name="photo_id" value = "" id = "photo_id" style="display:contents">
+                                    <input type="text" name="text" placeholder="write your comment here..." id= "input-container">
                                     <input type="submit" value="Upload_comment" name="submit">
                                 </div>
                             </button>
+                            <div>
+                                <p class="total_comments" id="total_comments_view">
+                                    <!-- filled in script -->
+                                </p>
+                            </div>
                         </div>
-                        <div>
-                            <p class="total_comments">
-                                0
-                            </p>
-                        </div>
+                        
+
+                        <br>
                         <div class="comments" id="comments">
-                            <?php include "scripts/comments.php"?>
-                            <script>
-                                // contains details of all comments for that image
-                                var array = <?php echo json_encode($array);?>;
-
-                                for (var i = 0; array[i]; i++)
-                                {   
-                                    var com =document.getElementById("comments");
-
-                                    var com_box =document.createElement("div");
-                                    var com_txt =document.createElement("span");
-
-                                    com_box.classList.add("com_box");
-                                    com_txt.classList.add("com_txt");
-
-                                    com_box.innerHTML =array[i]["user_id"] + "=>" + array[i]["comment"];
-
-                                    com.appendChild(com_box);
-                                    com_box.appendChild(com_com_txt);
-
-                                }
-                                console.log(array);
-                                console.log(i);
-
-                            </script>
+                            
                         </div>
                     </div>
                 </div>
@@ -188,35 +188,24 @@
     </div>
 </div> -->
 
-    <?php
-        // $gallery_images = false;
-        // $main_page_images = true;
-        // $profile_page_images = false; 
-        //print_r(($_SESSION));
-
-        require_once "scripts/script.php";
-
-        // print_r($_SESSION);
-        // echo nl2br ("\n");
-        // print_r($row);
-    ?>
 
     <script>
     // Get the necessary elements
     const dropdownBtn = document.querySelector('.dropdown-btn');
     const dropdownMenu = document.querySelector('.dropdown-menu');
-   // const inputContainer = document.getElementById('input-container');
+    const inputContainer = document.getElementById('input-container');
     const inputFields = document.querySelectorAll('.dropdown-menu input');
-  
+    
     // Toggle dropdown menu
-    console.log("re");
-    dropdownBtn.addEventListener('click', function() {
+    dropdownBtn.addEventListener('click', function() 
+    {
       dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
     });
   
     // Handle input selection
     inputFields.forEach(function(input) {
-      input.addEventListener('click', function(event) {
+      input.addEventListener('click', function(event) 
+      {
         const selectedInput = event.target;
         const clonedInput = selectedInput.cloneNode(true);
         inputContainer.innerHTML = '';

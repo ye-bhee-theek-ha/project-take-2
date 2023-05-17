@@ -7,6 +7,8 @@
     $_SESSION["password"] = NULL;
     $_SESSION["profile_pic"] = NULL;
     $_SESSION["credit_card"] = NULL;
+    $_SESSION["current_page"] = NULL;
+    $_POST["search_bar"] = NULL;
     
     include_once "user_reg_and_validation.php";
 ?>

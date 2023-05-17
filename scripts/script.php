@@ -3,6 +3,8 @@
 ?>
 
 <script>
+    var current_viewed_img = 0;
+
     var data = <?php echo json_encode($data);?>;
     var num_of_rows  = <?php echo json_encode($num);?>;
 
@@ -53,15 +55,6 @@
             }
             
             var all = document.getElementById("all_img");
-
-            // if (//view img true)
-            // {
-            //     all.classList.add("all_img_when_view_img_true");
-            // }
-            // else if (//view image false)
-            // {
-            //     all.classList.remove("all_img_when_view_img_true");
-            // }
     
             for (var i = 0; i < num_of_rows; i++)
             {
@@ -116,6 +109,10 @@
                 image.img_box = img_box;
                 image.path = paths_of_images[i];
                 image.id = photo_id_of_images[i];
+                image.total_likes = total_likes_of_images[i];
+                image.total_comments = total_comments_of_images[i];
+                image.name =names_of_images[i];
+                image.description =desc_of_images[i];
 
                 image.src = paths_of_images[i];
                 image.alt = "IMAGE" + i;
@@ -221,15 +218,22 @@
             xhr.open("POST", "scripts/comments.php", true);
             xhr.setRequestHeader("Content-Type", "application/json");
 
-            // sending to php (below)
+            // sending to php
             xhr.send(JSON.stringify(comment_info));
-            console.log(comment_info);
+
+            var c = document.getElementById("total_comments_view");
+            c.innerHTML = evt.currentTarget.total_comments;
+            
 
             var view_img = document.getElementById("view_img");
             var img_box = document.getElementsByClassName("img_container_outer");
             var img_view = document.getElementById("image_view");
 
             img_view.src = evt.currentTarget.path;
+
+            //setting value of imput of commments as img_id
+            var img_id_com = document.getElementById("photo_id");
+            img_id_com.value = comment_info;
 
             // showing large image
             for(var i = 0; img_box[i]; i++)
@@ -246,12 +250,72 @@
             all = document.getElementById("all_img");
             all.classList.add("col-6");
             all.classList.remove("col-12");
+
+            current_viewed_img = evt.currentTarget.id;
+
+            var title =document.getElementById("title");
+            var desc =document.getElementById("discription");
+
+            title.innerHTML = evt.currentTarget.name;
+            if (evt.currentTarget.description != "")
+            {
+                desc.innerHTML = evt.currentTarget.description;
+            }
+
+            show_comments();
         }
 
-    function set_view_image_false(all)
+    function set_view_image_false()
         {
-            
+            all = document.getElementById("all_img");
+            all.classList.remove("col-6");
+            all.classList.add("col-12");
         }
+
+    function show_comments()
+    {
+            // contains details of all comments for that image
+            
+            var comments_data = <?php echo json_encode($comments_data); ?>;
+            console.log(comments_data);
+            var current_needed_img = current_viewed_img;
+            var comments_data_filtered = [];
+
+            for (var i = 0; comments_data[i]; i++)
+            {
+                for (var j = 0; comments_data[i][j]; j++)
+                {
+                    if (comments_data[i][j]["photo_id"] == current_needed_img)
+                    {
+                        comments_data_filtered[j] = comments_data[i][j];
+                    }
+                }
+            }
+
+            console.log(comments_data_filtered);
+
+            var com = document.getElementById("comments");
+            while (com.firstChild) 
+            {
+                com.firstChild.remove();
+            }
+
+            for (var i = 0; comments_data_filtered[i]; i++)
+            {   
+
+                var com_box = document.createElement("div");
+                var com_txt = document.createElement("span");
+
+                com_box.classList.add("com_box");
+                com_txt.classList.add("com_txt");
+
+                com_box.innerHTML =comments_data_filtered[i]["user_id"] + " : " + comments_data_filtered[i]["comment"];
+
+                com.appendChild(com_box);
+                com_box.appendChild(com_txt);
+
+            }
+    }
 
     function view_img_container(img_box)
         {
@@ -267,10 +331,6 @@
             img_box.classList.add("col-lg-3");
         }
 
-            function display_comments()
-        {
-
-        }
 
     function change_liked(evt)
         {

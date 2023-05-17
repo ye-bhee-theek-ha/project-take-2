@@ -1,6 +1,7 @@
 <?php
-    require "backend_boilerplate.php";
     session_start();
+
+    require "backend_boilerplate.php";
 
     // getting all images
     $data = array();
@@ -15,6 +16,11 @@
         $data[] = mysqli_fetch_assoc($all_images_result);
     }
     
+    
+
+    require "scripts/get_liked_info.php"; //also get comment
+    require_once "scripts/script.php";
+    include_once "insert_comments.php";
 ?>
 
 <!DOCTYPE html>
@@ -90,25 +96,67 @@
 
     <div id="page2_body">
 
-        <div class="page2_content">
-            <div class="row , all_images, m-auto" id="all_img"></div>
+    <div class="page2_content row">          
+
+        <div class="view_img position-sticky col-6" id="view_img" style="">
+            <div class="image_container_view" style="height: auto;">
+                <div class="close_btn_div" style="margin-inline-start: auto;" >
+                    <button class="nav_buttons_icon" onclick="set_view_image_false()">
+                    <i class="like_button material-icons-more">
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </i>
+                    </button>
+                </div>
+                <img class = "image_view img-fluid" id = "image_view" src="uploads/ok/t0apabs39vj91.jpg" alt="pic1">
+                <div class="image_options2">
+                    <div class="info">
+                        <div class="title" id= "title">
+
+                        </div>
+                        <div class="description" id = "description">
+
+                        </div>
+
+                    </div>
+                    <div class="image_button_container">
+                        <button class="nav_buttons_icon dropdown-btn" type = "button" onclick="show()">
+                            <i class="like_button material-icons-more">
+                                <span class="material-symbols-outlined">
+                                    comment
+                                </span>
+                            </i>
+                            <form id="show" class="dropdown-menu" method="post">
+                                <input type="text" name="photo_id" value = "" id = "photo_id" style="display:contents">
+                                <input type="text" name="text" placeholder="write your comment here..." id= "input-container">
+                                <input type="submit" value="Upload_comment" name="submit">
+                            </form>
+                        </button>
+                        <div>
+                            <p class="total_comments" id="total_comments_view">
+                                <!-- filled in script -->
+                            </p>
+                        </div>
+                    </div>
+                    
+
+                    <br>
+                    <div class="comments" id="comments">
+                        
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <div class="col-12 all_images " id="all_img" >
+        </div>
+
     </div>
 
     <?php
-        // $gallery_images = false;
-        // $main_page_images = true;
-        // $profile_page_images = false; 
-        require_once "scripts/script.php";
-
-        // print_r($_SESSION);
-        // echo nl2br ("\n");
-        // print_r($row);
+        
     ?>  
-
-    <script src="scripts/script.php">
-
-    </script>
 
 </body>
 </html>
@@ -127,3 +175,25 @@
         </div>
     </div>
 </div> -->
+
+<script>
+    var sb = false;
+    function show()
+    {
+        if (sb)
+        {
+            colses();
+        }
+        else
+        {
+            var s =document.getElementById("show");
+            s.style.display = "block";
+        }
+    }
+
+    function closes()
+    {
+        var s =document.getElementById("show");
+        s.style.display = "none";
+    }
+</script>

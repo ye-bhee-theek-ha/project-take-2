@@ -1,6 +1,10 @@
+
+
 <?php
+    $current_user  = $_SESSION["user_id"];
     // getting images for homrscreen
-    $all_images = "select * from images ORDER BY total_likes DESC LIMIT 25;";
+    $all_images = " select * from images
+    ORDER BY total_likes DESC LIMIT 25;";
 
     //debug_to_console($all_images);
 
@@ -9,16 +13,22 @@
     $data[] = array();
 
     $comments_data = array();
-
-    if (isset($_POST["search_bar"]))
+    if ($_SESSION["current_page"] == "profile")
+    {
+        $all_images = " select * from images
+        WHERE (user_id = '{$current_user}')
+        ORDER BY total_likes DESC LIMIT 25;";
+    }
+    else if (($_POST["search_bar"] != "") && isset($_POST["search_bar"]))
     {
         // getting searched images
         $searched_text = $_POST["search_bar"];
         $all_images = " select * from images
                         WHERE (title LIKE '%{$searched_text}%')
                         ORDER BY total_likes DESC LIMIT 25;";
-                        
     }
+    
+    
     $all_images_result = mysqli_query($conn,$all_images);
 
     $num = mysqli_num_rows($all_images_result);
@@ -51,8 +61,6 @@
     {
         $liked_images_tmp = array();
         $liked_images = array();
-
-        global $current_user;
 
         //getting all liked images of current user then comparing it with displayed images
 

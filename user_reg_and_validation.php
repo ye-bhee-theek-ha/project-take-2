@@ -162,7 +162,7 @@ function register()
         $_SESSION["phone_num"] = $arr_register[3];
 
         //redirecting to main page
-        $url = "http://localhost/project%20take%203/main_page.php";
+        $url = "http://localhost/project%20take%203/profile_page.php";
         redirect($url);
 
 

@@ -63,8 +63,7 @@ if(isset($_POST["submit"]))
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))  //uploading
     {
       echo "The file ". htmlspecialchars( basename( $_FILES["fileToUpload"]["name"])). " has been uploaded.";
-
-      include "backend_boilerplate.php";  //to updating database
+      
       global $conn;
 
       if ($_POST["submit"] == "Upload profile")   // checking if profile pic is uploading (target file is the actual path of image stored)
@@ -112,3 +111,8 @@ if(isset($_POST["submit"]))
 }
 
 
+?>
+
+<script>
+  remove_upload_form();
+</script>
